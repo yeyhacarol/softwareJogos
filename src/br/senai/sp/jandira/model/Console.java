@@ -2,11 +2,8 @@ package br.senai.sp.jandira.model;
 
 public enum Console {
 
-	ATARI("Atari"), DREAMCAST("Dreamcast"), GAMEBOYADVANCED("Game Boy Advance"), GAMEBOY("Game Boy"),
-	GAMECUBE("GameCube"), GAMEGEAR("Game Gear"), MASTERSYSTEM("Master System"), MEGADRIVE("Mega Drive"), NES("NES"),
-	NINTENDO("Nintendo"), NINTENDODS("Nintendo DS"), NINTENDOMEIAQUATRO("Nintendo 64"), TRESDS("3DS"),
-	PLAYSTATION("Playstation"), PLAYSTATIONDOIS("Playstation 2"), PLAYSTATIONTRES("Playstation 3"), PSP("PSP"), SNES("SNES"),
-	WII("Wii"), XBOX("Xbox"), XBOXONEX("Xbox "), XBOXTRESMEIAZERO("Xbox 360");
+	ATARI("Atari"), GAMEBOY("Game Boy"), MASTERSYSTEM("Master System"), MEGADRIVE("Mega Drive"), 
+	NINTENDO("Nintendo"), PLAYSTATION("Playstation"), XBOX("Xbox");
 
 	private String descricao;
 

@@ -2,17 +2,39 @@ package br.senai.sp.jandira.model;
 
 public class Jogo {
 
-	private String nome;
-	private Fabricante fabricante;
+	private String titulo;
 	private Console console;
+	private Fabricante fabricante;
+	private boolean zerado;
+	private String observacoes;
 	private double valor;
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setTitulo(String nome) {
+		this.titulo = nome;
+	}
+
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public boolean isZerado() {
+		return zerado;
+	}
+
+	public void setZerado(boolean zerado) {
+		this.zerado = zerado;
+	}
+
+	public String getObservacoes() {
+		return observacoes;
+	}
+
+	public void setObservacoes(String observacoes) {
+		this.observacoes = observacoes;
 	}
 
 	public String getNome() {
-		return nome;
+		return titulo;
 	}
 
 	public void setFabricante(Fabricante fabricante) {

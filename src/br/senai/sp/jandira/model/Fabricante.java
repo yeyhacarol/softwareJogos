@@ -9,6 +9,10 @@ public class Fabricante {
 	public Fabricante(String fabricante) {
 		this.nome = fabricante;
 	}
+	
+	public Fabricante() {
+		
+	}
 
 	public void setNome(String nome) {
 		this.nome = nome;
@@ -32,6 +36,11 @@ public class Fabricante {
 
 	public String getSede() {
 		return sede;
+	}
+	
+	@Override
+	public String toString() {
+		return this.nome;
 	}
 
 }

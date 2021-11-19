@@ -4,25 +4,40 @@ import br.senai.sp.jandira.model.Fabricante;
 
 public class FabricanteRepository {
 
-	private Fabricante[] fabricante;
+	private Fabricante[] fabricantes;
 
 	public FabricanteRepository() {
 
-		fabricante = new Fabricante[5];
+		fabricantes = new Fabricante[8];
 		
-		fabricante[0] = new Fabricante("Atari");
-		fabricante[1] = new Fabricante("Microsoft");
-		fabricante[2] = new Fabricante("Nintendo");
-		fabricante[3] = new Fabricante("Sega");
-		fabricante[4] = new Fabricante("Sony");
+		fabricantes[0] = new Fabricante("Actvision Blizzard");
+		fabricantes[1] = new Fabricante("Capcom");
+		fabricantes[2] = new Fabricante("Eletronic Arts");
+		fabricantes[3] = new Fabricante("Microsoft");
+		fabricantes[4] = new Fabricante("Nintendo");
+		fabricantes[5] = new Fabricante("Rockstar");
+		fabricantes[6] = new Fabricante("Sega");
+		fabricantes[7] = new Fabricante("Sony");
 	}
 
+	public Fabricante[] getFabricantes() {
+		return fabricantes;
+	}
+
+	public void setFabricantes(Fabricante[] fabricantes) {
+		this.fabricantes = fabricantes;
+	}
+	
 	public Fabricante listarFabricante(int posicao) {
-		return fabricante[posicao];
+		return fabricantes[posicao];
 	}
 	
 	public Fabricante[] listarTodos() {
-		return fabricante;
+		return fabricantes;
+	}
+	
+	public int getLegth() {
+		return fabricantes.length;
 	}
 
 }

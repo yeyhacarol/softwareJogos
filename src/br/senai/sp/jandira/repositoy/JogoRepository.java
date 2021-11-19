@@ -10,6 +10,10 @@ public class JogoRepository {
 		jogos = new Jogo[quantidadeJogos];
 	}
 	
+	public JogoRepository() {
+		jogos = new Jogo[20];
+	}
+
 	public void salvarJogos(Jogo jogos, int posicao) {
 		this.jogos[posicao] = jogos;
 	}
