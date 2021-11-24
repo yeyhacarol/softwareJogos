@@ -26,10 +26,8 @@ import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JScrollBar;
-import javax.swing.JRadioButton;
-import javax.swing.JToggleButton;
 import javax.swing.ImageIcon;
+import java.awt.Color;
 
 public class TelaCadastroJogos extends JFrame {
 
@@ -42,6 +40,7 @@ public class TelaCadastroJogos extends JFrame {
 	public TelaCadastroJogos() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 780, 680);
+		setTitle("Software de jogos");
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -113,7 +112,7 @@ public class TelaCadastroJogos extends JFrame {
 
 		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.setFont(new Font("Yu Gothic", Font.PLAIN, 16));
-		btnSalvar.setBounds(92, 563, 175, 30);
+		btnSalvar.setBounds(70, 562, 175, 30);
 		contentPane.add(btnSalvar);
 
 		JLabel lblListaJogos = new JLabel("Lista de jogos:");
@@ -131,24 +130,30 @@ public class TelaCadastroJogos extends JFrame {
 
 		DefaultListModel<String> listaModel = new DefaultListModel<String>();
 		listJogos.setModel(listaModel);
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 363, 300, 177);
 		contentPane.add(scrollPane);
-		
+
 		JTextArea textAreaObservacoes = new JTextArea();
 		scrollPane.setViewportView(textAreaObservacoes);
 		textAreaObservacoes.setFont(new Font("Yu Gothic", Font.PLAIN, 15));
 		
+		Color corBotao = new Color(52, 122, 235);
+
 		JButton btnVoltar = new JButton("");
 		btnVoltar.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		btnVoltar.setIcon(new ImageIcon(TelaCadastroJogos.class.getResource("/br/senai/sp/jandira/img/seta-esquerda (1).png")));
+		btnVoltar.setIcon(
+				new ImageIcon(TelaCadastroJogos.class.getResource("/br/senai/sp/jandira/img/seta-esquerda (1).png")));
 		btnVoltar.setBounds(450, 361, 122, 70);
+		btnVoltar.setBackground(corBotao);
 		contentPane.add(btnVoltar);
-		
+
 		JButton btnAvancar = new JButton("");
-		btnAvancar.setIcon(new ImageIcon(TelaCadastroJogos.class.getResource("/br/senai/sp/jandira/img/seta-direita (1).png")));
+		btnAvancar.setIcon(
+				new ImageIcon(TelaCadastroJogos.class.getResource("/br/senai/sp/jandira/img/seta-direita (1).png")));
 		btnAvancar.setBounds(602, 361, 122, 70);
+		btnAvancar.setBackground(corBotao);
 		contentPane.add(btnAvancar);
 
 		JogoRepository jogos = new JogoRepository();
@@ -159,10 +164,9 @@ public class TelaCadastroJogos extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				Jogo meuJogo = new Jogo();
-				Fabricante fabrica = new Fabricante();
 
 				meuJogo.setTitulo(txtTituloJogo.getText());
-				meuJogo.setObservacoes(txtObservacoes.getText());
+				meuJogo.setObservacoes(textAreaObservacoes.getText());
 				meuJogo.setValor(Double.parseDouble(txtValor.getText()));
 
 				jogos.salvarJogos(meuJogo, posicao);
@@ -178,7 +182,7 @@ public class TelaCadastroJogos extends JFrame {
 
 				txtTituloJogo.setText("");
 				txtValor.setText("");
-				txtObservacoes.setText("");
+				textAreaObservacoes.setText("");
 				comboConsoles.setSelectedIndex(0);
 				comboFabricantes.setSelectedIndex(0);
 
@@ -192,21 +196,43 @@ public class TelaCadastroJogos extends JFrame {
 
 				Jogo jogo = jogos.listarJogo(listJogos.getSelectedIndex());
 				txtTituloJogo.setText(jogo.getNome());
-				txtObservacoes.setText(jogo.getObservacoes());
-				
+				textAreaObservacoes.setText(jogo.getObservacoes());
+
 				txtValor.setText(Double.toString(jogo.getValor()));
 
 				comboConsoles.setSelectedIndex(jogo.getConsole().ordinal());
 
 				comboFabricantes
-						.setSelectedIndex(Arrays.asList(fabricantes.listarTodos()).indexOf(
-								jogo.getFabricante()));
+						.setSelectedIndex(Arrays.asList(fabricantes.listarTodos()).indexOf(jogo.getFabricante()));
 
 				checkZerado.setSelected(jogo.isZerado());
 
 			}
 		});
-		
+
+		btnVoltar.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				int voltarJogo = listJogos.getSelectedIndex();
+
+				listJogos.setSelectedIndex(voltarJogo - 1);
+
+			}
+		});
+
+		btnAvancar.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				int avancarJogo = listJogos.getSelectedIndex();
+				
+				listJogos.setSelectedIndex(avancarJogo + 1);
+
+			}
+		});
 		
 		
 

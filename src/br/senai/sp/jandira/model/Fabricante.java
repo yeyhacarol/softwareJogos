@@ -2,12 +2,12 @@ package br.senai.sp.jandira.model;
 
 public class Fabricante {
 
-	private String nome;
+	private String nomeFabricante;
 	private String fundacao;
 	private String sede;
 
 	public Fabricante(String fabricante) {
-		this.nome = fabricante;
+		this.nomeFabricante = fabricante;
 	}
 
 	public Fabricante() {
@@ -15,11 +15,11 @@ public class Fabricante {
 	}
 
 	public void setNome(int nome) {
-		this.nome = Integer.toString(nome);
+		this.nomeFabricante = Integer.toString(nome);
 	}
 
 	public String getNome() {
-		return nome;
+		return nomeFabricante;
 	}
 
 	public void setFundacao(String fundacao) {
@@ -40,7 +40,7 @@ public class Fabricante {
 
 	@Override
 	public String toString() {
-		return this.nome;
+		return this.nomeFabricante;
 	}
 
 }
