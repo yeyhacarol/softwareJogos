@@ -9,13 +9,13 @@ public class Fabricante {
 	public Fabricante(String fabricante) {
 		this.nome = fabricante;
 	}
-	
+
 	public Fabricante() {
-		
+
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setNome(int nome) {
+		this.nome = Integer.toString(nome);
 	}
 
 	public String getNome() {
@@ -37,7 +37,7 @@ public class Fabricante {
 	public String getSede() {
 		return sede;
 	}
-	
+
 	@Override
 	public String toString() {
 		return this.nome;

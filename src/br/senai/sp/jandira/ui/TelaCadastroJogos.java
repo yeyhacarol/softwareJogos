@@ -1,8 +1,5 @@
 package br.senai.sp.jandira.ui;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -12,8 +9,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.SwingConstants;
+import java.util.Arrays;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -26,25 +22,22 @@ import br.senai.sp.jandira.repositoy.FabricanteRepository;
 import br.senai.sp.jandira.repositoy.JogoRepository;
 
 import javax.swing.JCheckBox;
-import javax.swing.JSeparator;
-import javax.swing.JToggleButton;
-import javax.swing.JTree;
 import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JScrollBar;
-import javax.swing.ButtonGroup;
+import javax.swing.JRadioButton;
+import javax.swing.JToggleButton;
+import javax.swing.ImageIcon;
 
 public class TelaCadastroJogos extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtTituloJogo;
 	private JTextField txtValor;
-	private JTextField txtObservacoes;
 
 	private int posicao;
-	private final ButtonGroup buttonGroup = new ButtonGroup();
 
 	public TelaCadastroJogos() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -82,7 +75,6 @@ public class TelaCadastroJogos extends JFrame {
 		contentPane.add(comboConsoles);
 
 		JCheckBox checkZerado = new JCheckBox("Zerado");
-		buttonGroup.add(checkZerado);
 		checkZerado.setFont(new Font("Yu Gothic", Font.PLAIN, 16));
 		checkZerado.setBounds(135, 185, 84, 30);
 		contentPane.add(checkZerado);
@@ -114,12 +106,6 @@ public class TelaCadastroJogos extends JFrame {
 		txtValor.setBounds(135, 245, 175, 30);
 		contentPane.add(txtValor);
 
-		txtObservacoes = new JTextField();
-		txtObservacoes.setFont(new Font("Yu Gothic", Font.PLAIN, 16));
-		txtObservacoes.setBounds(10, 355, 300, 165);
-		contentPane.add(txtObservacoes);
-		txtObservacoes.setColumns(10);
-
 		JLabel lblObservacoes = new JLabel("Observações:");
 		lblObservacoes.setFont(new Font("Yu Gothic", Font.PLAIN, 16));
 		lblObservacoes.setBounds(10, 320, 132, 30);
@@ -142,13 +128,31 @@ public class TelaCadastroJogos extends JFrame {
 		JList listJogos = new JList();
 		listJogos.setFont(new Font("Yu Gothic", Font.PLAIN, 16));
 		scrollPaneListaJogos.setViewportView(listJogos);
-		
+
 		DefaultListModel<String> listaModel = new DefaultListModel<String>();
 		listJogos.setModel(listaModel);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 363, 300, 177);
+		contentPane.add(scrollPane);
+		
+		JTextArea textAreaObservacoes = new JTextArea();
+		scrollPane.setViewportView(textAreaObservacoes);
+		textAreaObservacoes.setFont(new Font("Yu Gothic", Font.PLAIN, 15));
+		
+		JButton btnVoltar = new JButton("");
+		btnVoltar.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		btnVoltar.setIcon(new ImageIcon(TelaCadastroJogos.class.getResource("/br/senai/sp/jandira/img/seta-esquerda (1).png")));
+		btnVoltar.setBounds(450, 361, 122, 70);
+		contentPane.add(btnVoltar);
+		
+		JButton btnAvancar = new JButton("");
+		btnAvancar.setIcon(new ImageIcon(TelaCadastroJogos.class.getResource("/br/senai/sp/jandira/img/seta-direita (1).png")));
+		btnAvancar.setBounds(602, 361, 122, 70);
+		contentPane.add(btnAvancar);
 
 		JogoRepository jogos = new JogoRepository();
 
-		
 		btnSalvar.addActionListener(new ActionListener() {
 
 			@Override
@@ -159,38 +163,52 @@ public class TelaCadastroJogos extends JFrame {
 
 				meuJogo.setTitulo(txtTituloJogo.getText());
 				meuJogo.setObservacoes(txtObservacoes.getText());
-				
-				
+				meuJogo.setValor(Double.parseDouble(txtValor.getText()));
 
 				jogos.salvarJogos(meuJogo, posicao);
 
 				meuJogo.setConsole(definirConsole(comboConsoles.getSelectedIndex()));
-				
+				meuJogo.setFabricante(fabricantes.listarFabricante(comboFabricantes.getSelectedIndex()));
+
+				meuJogo.setZerado(checkZerado.isSelected());
+
 				posicao++;
-				
+
 				listaModel.addElement(meuJogo.getTitulo());
-				
+
 				txtTituloJogo.setText("");
+				txtValor.setText("");
 				txtObservacoes.setText("");
 				comboConsoles.setSelectedIndex(0);
+				comboFabricantes.setSelectedIndex(0);
 
 			}
 		});
-		
+
 		listJogos.addListSelectionListener(new ListSelectionListener() {
-			
+
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				
+
 				Jogo jogo = jogos.listarJogo(listJogos.getSelectedIndex());
 				txtTituloJogo.setText(jogo.getNome());
 				txtObservacoes.setText(jogo.getObservacoes());
 				
+				txtValor.setText(Double.toString(jogo.getValor()));
+
 				comboConsoles.setSelectedIndex(jogo.getConsole().ordinal());
-				comboFabricantes.setSelectedItem(jogo.getFabricante());
-				
+
+				comboFabricantes
+						.setSelectedIndex(Arrays.asList(fabricantes.listarTodos()).indexOf(
+								jogo.getFabricante()));
+
+				checkZerado.setSelected(jogo.isZerado());
+
 			}
 		});
+		
+		
+		
 
 	}
 
@@ -212,6 +230,4 @@ public class TelaCadastroJogos extends JFrame {
 			return Console.XBOX;
 		}
 	}
-	
-
 }
